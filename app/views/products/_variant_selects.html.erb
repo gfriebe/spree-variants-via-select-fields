@@ -30,11 +30,11 @@
 
 <script type="text/javascript">
 
-  var variant_selects_products = new Array();
+  var variants = new Array();
   <% @product.variants.active.each_with_index do |v,index|
      next if v.option_values.empty? || (!v.in_stock && !Spree::Config[:show_zero_stock_products])
      %>
-  variant_selects_products[<%= index %>] = [<%= v.id %>, <%= v.option_values.sort{|ov1, ov2| ov1.option_type.position <=> ov2.option_type.position}.map(&:id).join(",") %> ];
+    variants[<%= index %>] = [<%= v.id %>, <%= v.option_values.sort{|ov1, ov2| ov1.option_type.position <=> ov2.option_type.position}.map(&:id).join(",") %> ];
   <% end %>
 
 </script>
