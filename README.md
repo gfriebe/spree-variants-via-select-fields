@@ -1,20 +1,20 @@
 SpreeVariantsViaSelectField
 ===========================
 
-Introduction goes here.
+If your products have a broad selection of variants the default way of showing it as radio buttons quickly becomes very
+cluttered.
+This plugin creates select boxes from your option types.
+To prevent the selection of a combination of options (if 2 or more options) for which there is no product
+(or no available product), options will be disabled on the fly. While this works well with two option types it currently
+does not work 100% correctly if you have more the 2 option types per product. If the user chooses an invalid combination
+a message will be displayed that the selected product is not available.
+
+This plugin has only been testet on SpreeCommerce version 0.70.0
+
+release notes
+-------------
+* 0.1 - 17.11.2011
+  initial release
 
 
-Example
-=======
-
-Example goes here.
-
-Testing
--------
-
-Be sure to add the rspec-rails gem to your Gemfile and then create a dummy test app for the specs to run against.
-
-    $ bundle exec rake test app
-    $ bundle exec rspec spec
-
-Copyright (c) 2011 [name of extension creator], released under the New BSD License
+Copyright (c) 2011 [Gordon Friebe], released under the New BSD License
