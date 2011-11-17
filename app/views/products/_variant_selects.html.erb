@@ -1,0 +1,42 @@
+<% if @product.has_variants? %>
+  <div id="product-variants">
+    <h2><%= t('variants') %></h2>
+    <% @product.option_types.sort_by { |ot| ot.position }.each do |option_type| %>
+      <div><%= label_tag option_type.presentation %></div>
+      <div>
+        <select id="select_<%= option_type.name.downcase %>" class="option_values" name="option_values[<%= option_type.name.downcase %>]">
+          <% option_type.option_values.each do |option| %>
+            <option value="<%= option.id %>">
+              <%= option.presentation %>
+            </option>
+          <% end %>
+        </select>
+      </div>
+    <% end %>
+  </div>
+  <div style="color: red;"></div>
+  <%= hidden_field_tag "products[#{@product.id}]", "", :id => 'product_id' %>
+<% end %>
+<% if @product.has_stock? || Spree::Config[:allow_backorders] %>
+  <%= text_field_tag (@product.has_variants? ? :quantity : "variants[#{@product.master.id}]"),
+                     1, :class => 'title', :size => 3 %>
+  &nbsp;
+  <%= button_tag :class => 'large primary', :id => 'add-to-cart-button' do %>
+    <%= image_tag('icons/add-to-cart.png') + t(:add_to_cart) %>
+  <% end %>
+<% else %>
+  <%= content_tag('strong', t(:out_of_stock)) %>
+<% end %>
+
+<script type="text/javascript">
+
+  var variant_selects_products = new Array();
+  <% @product.variants.active.each_with_index do |v,index|
+     next if v.option_values.empty? || (!v.in_stock && !Spree::Config[:show_zero_stock_products])
+     %>
+  variant_selects_products[<%= index %>] = [<%= v.id %>, <%= v.option_values.sort{|ov1, ov2| ov1.option_type.position <=> ov2.option_type.position}.map(&:id).join(",") %> ];
+  <% end %>
+
+</script>
+
+    
